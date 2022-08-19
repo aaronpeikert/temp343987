@@ -10,7 +10,6 @@ name: Render and publish
 jobs:
   imagename:
     runs-on: ubuntu-latest
-    # Map a step output to a job output
     outputs:
       output1: ${{ steps.step1.outputs.test }}
     steps:
@@ -18,6 +17,7 @@ jobs:
         run: echo "::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
   job2:
     runs-on: ubuntu-latest
+    container: ghcr.io/${{needs.imagename.outputs.output1}}:main
     needs: imagename
     steps:
       - run: echo ${{needs.imagename.outputs.output1}}
