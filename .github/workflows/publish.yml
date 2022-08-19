@@ -13,11 +13,31 @@ jobs:
     outputs:
       lowercase: ${{ steps.lowercase.outputs.test }}
     steps:
-      - id: lowercase
+      - 
+        name: Convert the repo name to lowercase.
+        id: lowercase
         run: echo "::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
-  job2:
+  publish:
     runs-on: ubuntu-latest
-    #container: ghcr.io/${{needs.imagename.outputs.lowercase}}:main
     needs: imagename
+    container: ghcr.io/${{needs.imagename.outputs.lowercase}}:main
     steps:
-      - run: echo ${{needs.imagename.outputs.lowercase}}
+      -
+        name: Checkout repository
+        uses: actions/checkout@v3
+      -
+        name: Make things to be published.
+        run: |
+          make publish/
+      -
+        name: Publish 🚀
+        # only publish when push to main
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # The branch the action should deploy to.
+          branch: gh-pages
+          # The folder the action should deploy.
+          folder: publish/
+          # Organizations require token of the bearer!
+          token: ${{ secrets.GITHUB_TOKEN }}
