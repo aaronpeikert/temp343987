@@ -8,9 +8,16 @@ on:
 name: Render and publish
 
 jobs:
-  docker:
+  reponame:
     runs-on: ubuntu-latest
-    container: ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):main
+    outputs:
+      output1: ${{ steps.step1.outputs.lowercase }}
+    steps:
+      - run: echo ::set-output name=lowercase::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+  docker:
+    needs: reponame
+    runs-on: ubuntu-latest
+    container: ghcr.io/${{ needs.job1.outputs.lowercase}}:main
     steps:
       -
         name: Checkout repository
