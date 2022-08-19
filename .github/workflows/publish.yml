@@ -16,7 +16,7 @@ jobs:
         run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
   docker:
     runs-on: ubuntu-latest
-    container: ghcr.io/${{ IMAGE_REPOSITORY }}:main
+    container: ghcr.io/${{ env.IMAGE_REPOSITORY }}:main
     steps:
       -
         name: Checkout repository
