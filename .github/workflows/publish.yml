@@ -13,7 +13,7 @@ jobs:
     outputs:
       lowercase: ${{ steps.reponame.outputs.test }}
     steps:
-      - run: echo ::set-output name=lowercase::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+      - run: echo ::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
   docker:
     needs: reponame
     runs-on: ubuntu-latest
