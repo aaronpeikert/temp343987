@@ -11,9 +11,9 @@ jobs:
   imagename:
     runs-on: ubuntu-latest
     outputs:
-      lowercase: ${{ steps.step1.outputs.test }}
+      lowercase: ${{ steps.lowercase.outputs.test }}
     steps:
-      - id: step1
+      - id: lowercase
         run: echo "::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
   job2:
     runs-on: ubuntu-latest
