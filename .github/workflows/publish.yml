@@ -11,13 +11,13 @@ jobs:
   imagename:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
+      lowercase: ${{ steps.step1.outputs.test }}
     steps:
       - id: step1
         run: echo "::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
   job2:
     runs-on: ubuntu-latest
-    container: ghcr.io/${{needs.imagename.outputs.output1}}:main
+    #container: ghcr.io/${{needs.imagename.outputs.lowercase}}:main
     needs: imagename
     steps:
-      - run: echo ${{needs.imagename.outputs.output1}}
+      - run: echo ${{needs.imagename.outputs.lowercase}}
