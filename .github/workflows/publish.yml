@@ -17,6 +17,5 @@ jobs:
   docker:
     needs: reponame
     runs-on: ubuntu-latest
-    container: ghcr.io/${{ needs.job1.outputs.lowercase}}:main
     steps:
       - run: echo ${{ needs.job1.outputs.lowercase}}
