@@ -8,15 +8,9 @@ on:
 name: Render and publish
 
 jobs:
-  imagename:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Repository to lowercase.
-        run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
   docker:
     runs-on: ubuntu-latest
-    container: ghcr.io/${{ env.IMAGE_REPOSITORY }}:main
+    container: ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):main
     steps:
       -
         name: Checkout repository
