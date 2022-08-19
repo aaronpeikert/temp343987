@@ -13,7 +13,7 @@ jobs:
     outputs:
       output1: ${{ steps.imagename.outputs.test }}
     steps:
-      - id: step1
+      - id: imagename
         run: echo "::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
   job2:
     runs-on: ubuntu-latest
